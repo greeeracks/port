@@ -1,1 +1,468 @@
 # port
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Prajwal Sharma — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --cream:#F5F0E8;
+  --dark:#0D0D0D;
+  --accent:#C8502A;
+  --accent2:#2A6BC8;
+  --mid:#1A1A1A;
+  --muted:#888;
+  --border:rgba(0,0,0,0.08);
+}
+html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--dark);font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:none;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--cream);}
+::-webkit-scrollbar-thumb{background:var(--accent);}
+
+/* CURSOR */
+.cursor{position:fixed;width:8px;height:8px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transition:transform .1s;mix-blend-mode:multiply;}
+.cursor-follow{position:fixed;width:36px;height:36px;border:1.5px solid var(--accent);border-radius:50%;pointer-events:none;z-index:9998;transition:all .15s ease;mix-blend-mode:multiply;}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 5%;
+  background:rgba(245,240,232,0.85);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;letter-spacing:-0.5px;color:var(--dark);text-decoration:none;}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-decoration:none;font-weight:500;transition:.3s;}
+.nav-links a:hover{color:var(--accent);}
+.nav-hire{font-size:13px;letter-spacing:1px;text-transform:uppercase;font-weight:600;color:var(--accent);text-decoration:none;border-bottom:1.5px solid var(--accent);padding-bottom:2px;transition:.3s;}
+.nav-hire:hover{color:var(--dark);border-color:var(--dark);}
+
+/* HERO */
+.hero{
+  min-height:100vh;padding:0 5%;
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;gap:40px;position:relative;overflow:hidden;
+}
+.hero-bg-text{
+  position:absolute;bottom:-40px;left:-20px;
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(80px,14vw,200px);
+  color:transparent;-webkit-text-stroke:1px rgba(0,0,0,0.05);
+  letter-spacing:-6px;pointer-events:none;white-space:nowrap;user-select:none;
+}
+.hero-left{padding-top:80px;}
+.hero-available{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#fff;border:1px solid var(--border);
+  padding:8px 16px;border-radius:100px;
+  font-size:12px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--muted);font-weight:500;margin-bottom:32px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+}
+.dot{width:7px;height:7px;background:#22C55E;border-radius:50%;animation:pulse-dot 2s ease infinite;}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.4);}50%{box-shadow:0 0 0 6px rgba(34,197,94,0);}}
+.hero-name{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(42px,6vw,80px);line-height:1.0;letter-spacing:-2px;margin-bottom:16px;}
+.hero-name .first{display:block;color:var(--dark);}
+.hero-name .last{display:block;color:var(--accent);}
+.hero-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:600;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;}
+.hero-bio{font-size:16px;line-height:1.75;color:#555;max-width:420px;margin-bottom:40px;font-weight:300;}
+.hero-bio strong{color:var(--dark);font-weight:600;}
+.hero-ctas{display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
+.btn-main{background:var(--dark);color:var(--cream);padding:14px 32px;border-radius:4px;text-decoration:none;font-size:14px;font-weight:600;letter-spacing:0.5px;transition:.3s;display:inline-flex;align-items:center;gap:8px;}
+.btn-main:hover{background:var(--accent);transform:translateY(-2px);}
+.btn-outline{border:1.5px solid rgba(0,0,0,0.15);color:var(--dark);padding:13px 28px;border-radius:4px;text-decoration:none;font-size:14px;font-weight:500;transition:.3s;}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+.hero-right{padding-top:80px;display:flex;align-items:center;justify-content:center;position:relative;}
+.avatar-wrap{width:320px;height:380px;position:relative;}
+.avatar-bg{position:absolute;inset:0;border-radius:60% 40% 50% 50% / 50% 50% 60% 40%;background:linear-gradient(135deg,var(--accent) 0%,#e8856a 50%,#f5c5b5 100%);animation:morph 8s ease-in-out infinite;}
+@keyframes morph{0%,100%{border-radius:60% 40% 50% 50% / 50% 50% 60% 40%;}33%{border-radius:40% 60% 60% 40% / 60% 30% 70% 40%;}66%{border-radius:50% 50% 30% 70% / 40% 60% 40% 60%;}}
+.avatar-initials{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:72px;color:rgba(255,255,255,0.9);letter-spacing:-3px;text-shadow:0 4px 20px rgba(0,0,0,0.1);}
+.avatar-initials .sub{font-size:13px;letter-spacing:3px;font-weight:600;opacity:0.7;margin-top:4px;}
+.floating-tag{position:absolute;background:#fff;padding:10px 16px;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,0.12);font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.tag1{top:20px;right:-20px;animation-delay:0s;}
+.tag2{bottom:60px;left:-30px;animation-delay:1.5s;}
+.tag-icon{font-size:18px;}
+
+/* MARQUEE */
+.marquee-wrap{padding:20px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;background:#fff;}
+.marquee-track{display:flex;gap:48px;white-space:nowrap;animation:marquee 20s linear infinite;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.marquee-item{display:flex;align-items:center;gap:12px;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.marquee-dot{color:var(--accent);font-size:20px;line-height:1;}
+
+/* SECTIONS */
+section{padding:100px 5%;}
+.sec-label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:12px;}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--accent);opacity:0.3;max-width:60px;}
+.sec-heading{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(32px,4vw,52px);letter-spacing:-1.5px;line-height:1.05;margin-bottom:16px;}
+.sec-heading em{color:var(--accent);font-style:normal;}
+
+/* SKILLS */
+.skills-section{background:#fff;}
+.skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:60px;background:var(--border);}
+.skill-block{background:#fff;padding:40px;transition:.3s;position:relative;overflow:hidden;}
+.skill-block::after{content:'';position:absolute;bottom:0;left:0;width:0;height:3px;background:var(--accent);transition:.4s;}
+.skill-block:hover{background:var(--cream);}
+.skill-block:hover::after{width:100%;}
+.skill-emoji{font-size:32px;margin-bottom:16px;display:block;}
+.skill-name{font-family:'Syne',sans-serif;font-weight:700;font-size:20px;margin-bottom:8px;letter-spacing:-0.5px;}
+.skill-desc{font-size:14px;color:var(--muted);line-height:1.65;font-weight:300;}
+.skill-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;}
+.skill-tag{font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:600;padding:4px 10px;background:rgba(200,80,42,0.08);color:var(--accent);border-radius:2px;}
+
+/* EXPERIENCE */
+.exp-section{background:var(--dark);color:var(--cream);}
+.exp-section .sec-label{color:#C8502A;}
+.exp-section .sec-heading{color:var(--cream);}
+.timeline{margin-top:60px;position:relative;}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:rgba(255,255,255,0.08);}
+.timeline-item{padding-left:48px;padding-bottom:60px;position:relative;}
+.timeline-item:last-child{padding-bottom:0;}
+.timeline-dot{position:absolute;left:-6px;top:4px;width:13px;height:13px;border-radius:50%;background:var(--accent);border:3px solid var(--dark);}
+.timeline-period{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;font-weight:500;}
+.timeline-role{font-family:'Syne',sans-serif;font-weight:700;font-size:24px;letter-spacing:-0.5px;margin-bottom:4px;color:var(--cream);}
+.timeline-company{color:var(--accent);font-weight:600;font-size:15px;margin-bottom:16px;}
+.timeline-desc{font-size:15px;line-height:1.75;color:rgba(255,255,255,0.5);max-width:600px;font-weight:300;}
+.timeline-badge{display:inline-flex;align-items:center;gap:6px;margin-top:16px;background:rgba(200,80,42,0.15);border:1px solid rgba(200,80,42,0.3);padding:6px 14px;border-radius:2px;font-size:12px;font-weight:600;letter-spacing:1px;color:var(--accent);}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:60px;}
+.project-card{background:#fff;border:1px solid var(--border);padding:40px;border-radius:4px;position:relative;overflow:hidden;transition:.4s;}
+.project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));transform:scaleX(0);transform-origin:left;transition:.4s;}
+.project-card:hover{transform:translateY(-6px);box-shadow:0 24px 48px rgba(0,0,0,0.1);}
+.project-card:hover::before{transform:scaleX(1);}
+.project-num{font-family:'Syne',sans-serif;font-weight:800;font-size:48px;color:rgba(0,0,0,0.04);letter-spacing:-3px;line-height:1;margin-bottom:16px;}
+.project-title{font-family:'Syne',sans-serif;font-weight:700;font-size:20px;letter-spacing:-0.5px;margin-bottom:10px;}
+.project-desc{font-size:14px;color:var(--muted);line-height:1.7;font-weight:300;}
+.project-result{margin-top:20px;padding:12px 16px;background:rgba(200,80,42,0.06);border-left:3px solid var(--accent);font-size:13px;font-weight:600;color:var(--accent);}
+
+/* EDUCATION */
+.edu-section{background:#fff;}
+.edu-card{margin-top:60px;display:grid;grid-template-columns:1fr 2fr;gap:0;background:var(--cream);border-radius:4px;overflow:hidden;}
+.edu-left{background:var(--accent);padding:48px 40px;display:flex;flex-direction:column;justify-content:center;}
+.edu-year{font-family:'Syne',sans-serif;font-weight:800;font-size:52px;color:rgba(255,255,255,0.2);line-height:1;}
+.edu-degree{font-family:'Syne',sans-serif;font-weight:700;font-size:22px;color:#fff;margin-top:12px;letter-spacing:-0.5px;}
+.edu-field{font-size:14px;color:rgba(255,255,255,0.7);margin-top:4px;letter-spacing:1px;}
+.edu-right{padding:48px 48px;}
+.edu-college{font-family:'Syne',sans-serif;font-weight:800;font-size:28px;letter-spacing:-1px;margin-bottom:12px;}
+.edu-location{font-size:14px;color:var(--muted);margin-bottom:24px;}
+.edu-highlight{padding:16px 20px;background:#fff;border-radius:4px;border-left:3px solid var(--accent2);font-size:14px;line-height:1.65;color:#555;font-weight:300;}
+.edu-highlight strong{color:var(--dark);font-weight:600;}
+
+/* GOAL */
+.goal-section{background:var(--dark);color:var(--cream);text-align:center;padding:120px 5%;}
+.goal-section .sec-label{justify-content:center;}
+.goal-section .sec-label::after{display:none;}
+.goal-section .sec-label::before{content:'';flex:1;height:1px;background:rgba(200,80,42,0.3);max-width:60px;}
+.goal-text{font-family:'Syne',sans-serif;font-weight:700;font-size:clamp(24px,3.5vw,42px);letter-spacing:-1px;line-height:1.3;max-width:760px;margin:0 auto 48px;color:var(--cream);}
+.goal-text em{color:var(--accent);font-style:normal;}
+.goal-tags{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;}
+.goal-tag{padding:10px 20px;border:1px solid rgba(255,255,255,0.1);border-radius:100px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.6);transition:.3s;}
+.goal-tag:hover{border-color:var(--accent);color:var(--accent);}
+
+/* CONTACT */
+.contact-section{padding:100px 5%;background:var(--cream);}
+.contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.contact-left .big-text{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(36px,5vw,64px);letter-spacing:-2px;line-height:1.05;margin-bottom:24px;}
+.contact-left .big-text em{color:var(--accent);font-style:normal;}
+.contact-left p{font-size:16px;color:var(--muted);line-height:1.7;font-weight:300;margin-bottom:32px;}
+.contact-links{display:flex;flex-direction:column;gap:16px;}
+.contact-link{display:flex;align-items:center;gap:16px;text-decoration:none;color:var(--dark);padding:16px 20px;background:#fff;border-radius:4px;border:1px solid var(--border);transition:.3s;font-weight:500;font-size:15px;}
+.contact-link:hover{border-color:var(--accent);color:var(--accent);transform:translateX(6px);}
+.contact-link-icon{width:40px;height:40px;border-radius:4px;background:rgba(200,80,42,0.08);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.contact-right{background:var(--dark);padding:48px;border-radius:8px;}
+.contact-right h3{font-family:'Syne',sans-serif;font-weight:700;font-size:24px;color:var(--cream);margin-bottom:28px;letter-spacing:-0.5px;}
+.form-field{margin-bottom:16px;}
+.form-field input,.form-field textarea{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);color:var(--cream);padding:14px 18px;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:15px;outline:none;transition:.3s;}
+.form-field input:focus,.form-field textarea:focus{border-color:var(--accent);}
+.form-field input::placeholder,.form-field textarea::placeholder{color:rgba(255,255,255,0.25);}
+.form-field textarea{resize:none;height:110px;}
+.send-btn{width:100%;background:var(--accent);color:#fff;border:none;padding:16px;border-radius:4px;font-family:'Syne',sans-serif;font-weight:700;font-size:16px;letter-spacing:1px;cursor:pointer;transition:.3s;}
+.send-btn:hover{background:#b8441f;transform:translateY(-2px);}
+
+/* FOOTER */
+footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.05);padding:32px 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.footer-name{font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:var(--cream);}
+.footer-name span{color:var(--accent);}
+.footer-copy{font-size:13px;color:rgba(255,255,255,0.3);}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+.hero-left>*{animation:fadeUp .6s ease both;}
+.hero-available{animation-delay:.1s;}
+.hero-name{animation-delay:.2s;}
+.hero-title{animation-delay:.3s;}
+.hero-bio{animation-delay:.4s;}
+.hero-ctas{animation-delay:.5s;}
+
+/* MOBILE */
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr;padding-top:100px;}
+  .hero-right{display:none;}
+  .skills-grid,.projects-grid,.contact-inner{grid-template-columns:1fr;}
+  .edu-card{grid-template-columns:1fr;}
+  nav ul{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follow" id="cursorFollow"></div>
+
+<nav>
+  <a href="#" class="nav-logo">PS<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-hire">Hire Me →</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg-text">PRAJWAL</div>
+  <div class="hero-left">
+    <div class="hero-available"><span class="dot"></span> Open to Opportunities</div>
+    <h1 class="hero-name">
+      <span class="first">Prajwal</span>
+      <span class="last">Sharma</span>
+    </h1>
+    <div class="hero-title">Business Advisor · Consultant · Tech Enthusiast</div>
+    <p class="hero-bio">A guy with both <strong>technical and functional skills</strong> — Odoo consultant turned aspiring <strong>Data Engineer</strong>. I bridge the gap between business needs and tech solutions.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-main">Let's Talk →</a>
+      <a href="#experience" class="btn-outline">View Experience</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="avatar-wrap">
+      <div class="avatar-bg"></div>
+      <div class="avatar-initials">PS<div class="sub">Ahmedabad, IN</div></div>
+    </div>
+    <div class="floating-tag tag1"><span class="tag-icon">📊</span> 2× Revenue ROI</div>
+    <div class="floating-tag tag2"><span class="tag-icon">⚙️</span> Odoo Expert</div>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item"><span class="marquee-dot">·</span> Odoo ERP</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> Business Advisory</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> Data Engineering</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> Functional Consulting</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> OOP & DSA</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> Food & Beverages</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> Manufacturing</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> Trading</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> Odoo ERP</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> Business Advisory</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> Data Engineering</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> Functional Consulting</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> OOP & DSA</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> Food & Beverages</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> Manufacturing</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> Trading</div>
+  </div>
+</div>
+
+<section id="skills" class="skills-section">
+  <div class="sec-label">What I Know</div>
+  <div class="sec-heading">Skills & <em>Expertise</em></div>
+  <div class="skills-grid">
+    <div class="skill-block">
+      <span class="skill-emoji">⚙️</span>
+      <div class="skill-name">Odoo ERP</div>
+      <p class="skill-desc">Deep expertise in Odoo implementation, customization, and functional consulting across trading, manufacturing, and food & beverage industries.</p>
+      <div class="skill-tags"><span class="skill-tag">Functional</span><span class="skill-tag">Implementation</span><span class="skill-tag">Customization</span></div>
+    </div>
+    <div class="skill-block">
+      <span class="skill-emoji">💻</span>
+      <div class="skill-name">Technical Skills</div>
+      <p class="skill-desc">Strong foundation in Object-Oriented Programming and Data Structures & Algorithms. Currently building expertise in Data Engineering and pipeline architecture.</p>
+      <div class="skill-tags"><span class="skill-tag">OOP</span><span class="skill-tag">DSA</span><span class="skill-tag">Python</span></div>
+    </div>
+    <div class="skill-block">
+      <span class="skill-emoji">📈</span>
+      <div class="skill-name">Business Consulting</div>
+      <p class="skill-desc">Experience advising traders and manufacturers on process optimization, ERP adoption, and operational efficiency — delivering measurable revenue impact.</p>
+      <div class="skill-tags"><span class="skill-tag">Strategy</span><span class="skill-tag">Process Ops</span><span class="skill-tag">Advisory</span></div>
+    </div>
+    <div class="skill-block">
+      <span class="skill-emoji">🔭</span>
+      <div class="skill-name">Data Engineering (Learning)</div>
+      <p class="skill-desc">Actively pursuing data engineering skills — passionate about pipelines, analytics, and transforming raw business data into actionable insights.</p>
+      <div class="skill-tags"><span class="skill-tag">Pipelines</span><span class="skill-tag">Analytics</span><span class="skill-tag">SQL</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="exp-section">
+  <div class="sec-label">Career Path</div>
+  <div class="sec-heading">Work <em>Experience</em></div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">2023 – Present · 1.4 Years</div>
+      <div class="timeline-role">Business Advisor</div>
+      <div class="timeline-company">Odoo ERP Consulting</div>
+      <p class="timeline-desc">Worked closely with traders and manufacturers — primarily in food & beverage — to implement and optimize Odoo ERP. Drove business process improvements resulting in measurable ROI well beyond expectations.</p>
+      <div class="timeline-badge">🚀 Delivered 2× Revenue vs CTC</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">2022 – 2023 · 6 Months</div>
+      <div class="timeline-role">Intern — Functional Consultant</div>
+      <div class="timeline-company">Odoo ERP</div>
+      <p class="timeline-desc">Kickstarted career with a deep-dive internship into Odoo's functional ecosystem. Learned end-to-end ERP workflows, business analysis, and client communication — building the foundation for a consulting career.</p>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="sec-label">What I've Built</div>
+  <div class="sec-heading">Featured <em>Projects</em></div>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-num">01</div>
+      <div class="project-title">Wireless Bluetooth Screen Display</div>
+      <p class="project-desc">Built during college at St. Xavier's Ahmedabad — a wireless display system powered by Arduino and Bluetooth communication. Combined hardware and software to create a functional prototype from scratch.</p>
+      <div class="project-result">🎓 College Project · Electronics + Arduino</div>
+    </div>
+    <div class="project-card">
+      <div class="project-num">02</div>
+      <div class="project-title">Food & Beverage ERP Implementation</div>
+      <p class="project-desc">Led Odoo ERP deployments for multiple food & beverage traders and manufacturers — streamlining procurement, inventory, sales, and accounting into a unified system.</p>
+      <div class="project-result">📈 Result: 2× Revenue vs CTC Delivered</div>
+    </div>
+    <div class="project-card">
+      <div class="project-num">03</div>
+      <div class="project-title">Manufacturing Process Optimization</div>
+      <p class="project-desc">Consulted for manufacturing clients to map existing workflows and redesign them within Odoo — reducing manual effort, improving traceability, and cutting operational delays.</p>
+      <div class="project-result">⚙️ Industry: Manufacturing · Odoo MRP</div>
+    </div>
+    <div class="project-card">
+      <div class="project-num">04</div>
+      <div class="project-title">Trading Business Digitization</div>
+      <p class="project-desc">Helped multiple trading companies transition from manual/excel-based operations to fully digital Odoo workflows — purchase, sales, invoicing, and reporting all in one place.</p>
+      <div class="project-result">🛒 Industry: Trading · Full Odoo Suite</div>
+    </div>
+  </div>
+</section>
+
+<section id="education" class="edu-section">
+  <div class="sec-label">Academic Background</div>
+  <div class="sec-heading">My <em>Education</em></div>
+  <div class="edu-card">
+    <div class="edu-left">
+      <div class="edu-year">B.Sc.</div>
+      <div class="edu-degree">Bachelor of Science</div>
+      <div class="edu-field">Electronics</div>
+    </div>
+    <div class="edu-right">
+      <div class="edu-college">St. Xavier's College</div>
+      <div class="edu-location">📍 Ahmedabad, Gujarat</div>
+      <div class="edu-highlight">Studied electronics with a strong foundation in circuits, embedded systems, and hardware programming. Capstone project: <strong>Wireless Bluetooth Screen Display using Arduino</strong> — a self-built hardware + software system demonstrating initiative and hands-on technical thinking.</div>
+    </div>
+  </div>
+</section>
+
+<section class="goal-section">
+  <div class="sec-label">What's Next</div>
+  <div class="goal-text">"I'm a business consultant who codes — and I'm now aiming to become a <em>Data Engineer</em> who understands business."</div>
+  <div class="goal-tags">
+    <span class="goal-tag">🔭 Data Engineering</span>
+    <span class="goal-tag">📊 Business Intelligence</span>
+    <span class="goal-tag">⚙️ ETL Pipelines</span>
+    <span class="goal-tag">🐍 Python</span>
+    <span class="goal-tag">🗄️ SQL & Databases</span>
+    <span class="goal-tag">🤝 Open to Opportunities</span>
+  </div>
+</section>
+
+<section id="contact" class="contact-section">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <div class="big-text">Let's <em>Work</em> Together.</div>
+      <p>Whether you need an Odoo consultant, a business advisor, or someone eager to grow into data engineering — I'm your guy. Let's connect.</p>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/sharmaprajwal/" target="_blank" class="contact-link">
+          <div class="contact-link-icon">💼</div>linkedin.com/in/sharmaprajwal
+        </a>
+        <a href="mailto:sharmaprajwal6@gmail.com" class="contact-link">
+          <div class="contact-link-icon">✉️</div>sharmaprajwal6@gmail.com
+        </a>
+        <a href="#" class="contact-link">
+          <div class="contact-link-icon">📍</div>Ahmedabad, Gujarat, India
+        </a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <h3>Send a Message</h3>
+      <div class="form-field"><input type="text" placeholder="Your Name"/></div>
+      <div class="form-field"><input type="email" placeholder="Your Email"/></div>
+      <div class="form-field"><input type="text" placeholder="Subject"/></div>
+      <div class="form-field"><textarea placeholder="Your message..."></textarea></div>
+      <button class="send-btn" onclick="sendEmail()">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-name">Prajwal <span>Sharma</span></div>
+  <div class="footer-copy">© 2026 · Built with passion · Ahmedabad, India</div>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const follow = document.getElementById('cursorFollow');
+let mx=0,my=0,fx=0,fy=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cursor.style.left=mx-4+'px';cursor.style.top=my-4+'px';
+});
+function animFollow(){
+  fx+=(mx-fx)*0.12;fy+=(my-fy)*0.12;
+  follow.style.left=fx-18+'px';follow.style.top=fy-18+'px';
+  requestAnimationFrame(animFollow);
+}animFollow();
+
+document.querySelectorAll('a,button,.skill-block,.project-card,.contact-link').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.transform='scale(2.5)';follow.style.transform='scale(1.5)';});
+  el.addEventListener('mouseleave',()=>{cursor.style.transform='scale(1)';follow.style.transform='scale(1)';});
+});
+
+// Scroll reveal
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.style.animation='fadeUp .6s ease both';
+      e.target.style.opacity='1';
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('.skill-block,.timeline-item,.project-card,.edu-card').forEach(el=>{
+  el.style.opacity='0';observer.observe(el);
+});
+
+// Send email via mailto
+function sendEmail(){
+  const name = document.querySelector('.contact-right input[type="text"]').value;
+  const email = document.querySelector('.contact-right input[type="email"]').value;
+  const subject = document.querySelectorAll('.contact-right input[type="text"]')[1].value;
+  const message = document.querySelector('.contact-right textarea').value;
+  const mailto = `mailto:sharmaprajwal6@gmail.com?subject=${encodeURIComponent(subject || 'Portfolio Inquiry')}&body=${encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message)}`;
+  window.location.href = mailto;
+}
+</script>
+</body>
+</html>
