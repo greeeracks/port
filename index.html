@@ -12,7 +12,6 @@
   --dark:#0D0D0D;
   --accent:#C8502A;
   --accent2:#2A6BC8;
-  --mid:#1A1A1A;
   --muted:#888;
   --border:rgba(0,0,0,0.08);
 }
@@ -22,16 +21,30 @@ body{background:var(--cream);color:var(--dark);font-family:'DM Sans',sans-serif;
 ::-webkit-scrollbar-track{background:var(--cream);}
 ::-webkit-scrollbar-thumb{background:var(--accent);}
 
-/* CURSOR */
-.cursor{position:fixed;width:8px;height:8px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transition:transform .1s;mix-blend-mode:multiply;}
-.cursor-follow{position:fixed;width:36px;height:36px;border:1.5px solid var(--accent);border-radius:50%;pointer-events:none;z-index:9998;transition:all .15s ease;mix-blend-mode:multiply;}
+/* CURSOR - mix-blend-mode:difference makes it invert on dark backgrounds automatically */
+.cursor{
+  position:fixed;width:12px;height:12px;
+  background:#fff;border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transition:transform .1s;
+  mix-blend-mode:difference;
+}
+.cursor-follow{
+  position:fixed;width:38px;height:38px;
+  border:1.5px solid #fff;border-radius:50%;
+  pointer-events:none;z-index:9998;
+  transition:left .12s ease,top .12s ease,transform .2s;
+  mix-blend-mode:difference;
+}
+.cursor.hover{transform:scale(2.5);}
+.cursor-follow.hover{transform:scale(1.5);}
 
 /* NAV */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
   display:flex;align-items:center;justify-content:space-between;
   padding:20px 5%;
-  background:rgba(245,240,232,0.85);backdrop-filter:blur(12px);
+  background:rgba(245,240,232,0.88);backdrop-filter:blur(14px);
   border-bottom:1px solid var(--border);
 }
 .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;letter-spacing:-0.5px;color:var(--dark);text-decoration:none;}
@@ -43,27 +56,10 @@ nav{
 .nav-hire:hover{color:var(--dark);border-color:var(--dark);}
 
 /* HERO */
-.hero{
-  min-height:100vh;padding:0 5%;
-  display:grid;grid-template-columns:1fr 1fr;
-  align-items:center;gap:40px;position:relative;overflow:hidden;
-}
-.hero-bg-text{
-  position:absolute;bottom:-40px;left:-20px;
-  font-family:'Syne',sans-serif;font-weight:800;
-  font-size:clamp(80px,14vw,200px);
-  color:transparent;-webkit-text-stroke:1px rgba(0,0,0,0.05);
-  letter-spacing:-6px;pointer-events:none;white-space:nowrap;user-select:none;
-}
+.hero{min-height:100vh;padding:0 5%;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px;position:relative;overflow:hidden;}
+.hero-bg-text{position:absolute;bottom:-40px;left:-20px;font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(80px,14vw,200px);color:transparent;-webkit-text-stroke:1px rgba(0,0,0,0.05);letter-spacing:-6px;pointer-events:none;white-space:nowrap;user-select:none;}
 .hero-left{padding-top:80px;}
-.hero-available{
-  display:inline-flex;align-items:center;gap:8px;
-  background:#fff;border:1px solid var(--border);
-  padding:8px 16px;border-radius:100px;
-  font-size:12px;letter-spacing:1px;text-transform:uppercase;
-  color:var(--muted);font-weight:500;margin-bottom:32px;
-  box-shadow:0 2px 12px rgba(0,0,0,0.06);
-}
+.hero-available{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);padding:8px 16px;border-radius:100px;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:32px;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
 .dot{width:7px;height:7px;background:#22C55E;border-radius:50%;animation:pulse-dot 2s ease infinite;}
 @keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.4);}50%{box-shadow:0 0 0 6px rgba(34,197,94,0);}}
 .hero-name{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(42px,6vw,80px);line-height:1.0;letter-spacing:-2px;margin-bottom:16px;}
@@ -87,11 +83,10 @@ nav{
 @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
 .tag1{top:20px;right:-20px;animation-delay:0s;}
 .tag2{bottom:60px;left:-30px;animation-delay:1.5s;}
-.tag-icon{font-size:18px;}
 
 /* MARQUEE */
 .marquee-wrap{padding:20px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;background:#fff;}
-.marquee-track{display:flex;gap:48px;white-space:nowrap;animation:marquee 20s linear infinite;}
+.marquee-track{display:flex;gap:48px;white-space:nowrap;animation:marquee 22s linear infinite;}
 @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 .marquee-item{display:flex;align-items:center;gap:12px;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
 .marquee-dot{color:var(--accent);font-size:20px;line-height:1;}
@@ -128,7 +123,9 @@ section{padding:100px 5%;}
 .timeline-period{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;font-weight:500;}
 .timeline-role{font-family:'Syne',sans-serif;font-weight:700;font-size:24px;letter-spacing:-0.5px;margin-bottom:4px;color:var(--cream);}
 .timeline-company{color:var(--accent);font-weight:600;font-size:15px;margin-bottom:16px;}
-.timeline-desc{font-size:15px;line-height:1.75;color:rgba(255,255,255,0.5);max-width:600px;font-weight:300;}
+.timeline-desc{font-size:15px;line-height:1.75;color:rgba(255,255,255,0.5);max-width:640px;font-weight:300;}
+.timeline-desc ul{margin-top:10px;padding-left:18px;display:flex;flex-direction:column;gap:6px;}
+.timeline-desc ul li{color:rgba(255,255,255,0.5);font-size:14px;line-height:1.6;}
 .timeline-badge{display:inline-flex;align-items:center;gap:6px;margin-top:16px;background:rgba(200,80,42,0.15);border:1px solid rgba(200,80,42,0.3);padding:6px 14px;border-radius:2px;font-size:12px;font-weight:600;letter-spacing:1px;color:var(--accent);}
 
 /* PROJECTS */
@@ -149,7 +146,7 @@ section{padding:100px 5%;}
 .edu-year{font-family:'Syne',sans-serif;font-weight:800;font-size:52px;color:rgba(255,255,255,0.2);line-height:1;}
 .edu-degree{font-family:'Syne',sans-serif;font-weight:700;font-size:22px;color:#fff;margin-top:12px;letter-spacing:-0.5px;}
 .edu-field{font-size:14px;color:rgba(255,255,255,0.7);margin-top:4px;letter-spacing:1px;}
-.edu-right{padding:48px 48px;}
+.edu-right{padding:48px;}
 .edu-college{font-family:'Syne',sans-serif;font-weight:800;font-size:28px;letter-spacing:-1px;margin-bottom:12px;}
 .edu-location{font-size:14px;color:var(--muted);margin-bottom:24px;}
 .edu-highlight{padding:16px 20px;background:#fff;border-radius:4px;border-left:3px solid var(--accent2);font-size:14px;line-height:1.65;color:#555;font-weight:300;}
@@ -160,22 +157,22 @@ section{padding:100px 5%;}
 .goal-section .sec-label{justify-content:center;}
 .goal-section .sec-label::after{display:none;}
 .goal-section .sec-label::before{content:'';flex:1;height:1px;background:rgba(200,80,42,0.3);max-width:60px;}
-.goal-text{font-family:'Syne',sans-serif;font-weight:700;font-size:clamp(24px,3.5vw,42px);letter-spacing:-1px;line-height:1.3;max-width:760px;margin:0 auto 48px;color:var(--cream);}
+.goal-text{font-family:'Syne',sans-serif;font-weight:700;font-size:clamp(22px,3.5vw,40px);letter-spacing:-1px;line-height:1.3;max-width:760px;margin:0 auto 48px;color:var(--cream);}
 .goal-text em{color:var(--accent);font-style:normal;}
 .goal-tags{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;}
-.goal-tag{padding:10px 20px;border:1px solid rgba(255,255,255,0.1);border-radius:100px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.6);transition:.3s;}
+.goal-tag{padding:10px 20px;border:1px solid rgba(255,255,255,0.1);border-radius:100px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.6);transition:.3s;cursor:default;}
 .goal-tag:hover{border-color:var(--accent);color:var(--accent);}
 
 /* CONTACT */
 .contact-section{padding:100px 5%;background:var(--cream);}
 .contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
-.contact-left .big-text{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(36px,5vw,64px);letter-spacing:-2px;line-height:1.05;margin-bottom:24px;}
+.contact-left .big-text{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(36px,5vw,60px);letter-spacing:-2px;line-height:1.05;margin-bottom:24px;}
 .contact-left .big-text em{color:var(--accent);font-style:normal;}
 .contact-left p{font-size:16px;color:var(--muted);line-height:1.7;font-weight:300;margin-bottom:32px;}
 .contact-links{display:flex;flex-direction:column;gap:16px;}
 .contact-link{display:flex;align-items:center;gap:16px;text-decoration:none;color:var(--dark);padding:16px 20px;background:#fff;border-radius:4px;border:1px solid var(--border);transition:.3s;font-weight:500;font-size:15px;}
 .contact-link:hover{border-color:var(--accent);color:var(--accent);transform:translateX(6px);}
-.contact-link-icon{width:40px;height:40px;border-radius:4px;background:rgba(200,80,42,0.08);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.contact-link-icon{width:40px;height:40px;min-width:40px;border-radius:4px;background:rgba(200,80,42,0.08);display:flex;align-items:center;justify-content:center;font-size:18px;}
 .contact-right{background:var(--dark);padding:48px;border-radius:8px;}
 .contact-right h3{font-family:'Syne',sans-serif;font-weight:700;font-size:24px;color:var(--cream);margin-bottom:28px;letter-spacing:-0.5px;}
 .form-field{margin-bottom:16px;}
@@ -183,7 +180,7 @@ section{padding:100px 5%;}
 .form-field input:focus,.form-field textarea:focus{border-color:var(--accent);}
 .form-field input::placeholder,.form-field textarea::placeholder{color:rgba(255,255,255,0.25);}
 .form-field textarea{resize:none;height:110px;}
-.send-btn{width:100%;background:var(--accent);color:#fff;border:none;padding:16px;border-radius:4px;font-family:'Syne',sans-serif;font-weight:700;font-size:16px;letter-spacing:1px;cursor:pointer;transition:.3s;}
+.send-btn{width:100%;background:var(--accent);color:#fff;border:none;padding:16px;border-radius:4px;font-family:'Syne',sans-serif;font-weight:700;font-size:16px;letter-spacing:1px;cursor:none;transition:.3s;}
 .send-btn:hover{background:#b8441f;transform:translateY(-2px);}
 
 /* FOOTER */
@@ -201,7 +198,6 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.05);paddin
 .hero-bio{animation-delay:.4s;}
 .hero-ctas{animation-delay:.5s;}
 
-/* MOBILE */
 @media(max-width:768px){
   .hero{grid-template-columns:1fr;padding-top:100px;}
   .hero-right{display:none;}
@@ -216,6 +212,7 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.05);paddin
 <div class="cursor" id="cursor"></div>
 <div class="cursor-follow" id="cursorFollow"></div>
 
+<!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">PS<span>.</span></a>
   <ul class="nav-links">
@@ -227,6 +224,7 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.05);paddin
   <a href="#contact" class="nav-hire">Hire Me →</a>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
   <div class="hero-bg-text">PRAJWAL</div>
   <div class="hero-left">
@@ -235,8 +233,8 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.05);paddin
       <span class="first">Prajwal</span>
       <span class="last">Sharma</span>
     </h1>
-    <div class="hero-title">Business Advisor · Consultant · Tech Enthusiast</div>
-    <p class="hero-bio">A guy with both <strong>technical and functional skills</strong> — Odoo consultant turned aspiring <strong>Data Engineer</strong>. I bridge the gap between business needs and tech solutions.</p>
+    <div class="hero-title">Business Advisor · Odoo Consultant · Tech Enthusiast</div>
+    <p class="hero-bio">A guy with both <strong>technical and functional skills</strong> — Odoo consultant with hands-on ERP delivery experience, aiming to grow into <strong>Data Engineering</strong>. I bridge business and technology.</p>
     <div class="hero-ctas">
       <a href="#contact" class="btn-main">Let's Talk →</a>
       <a href="#experience" class="btn-outline">View Experience</a>
@@ -247,32 +245,38 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.05);paddin
       <div class="avatar-bg"></div>
       <div class="avatar-initials">PS<div class="sub">Ahmedabad, IN</div></div>
     </div>
-    <div class="floating-tag tag1"><span class="tag-icon">📊</span> 2× Revenue ROI</div>
-    <div class="floating-tag tag2"><span class="tag-icon">⚙️</span> Odoo Expert</div>
+    <div class="floating-tag tag1"><span>📊</span> 2× Revenue ROI</div>
+    <div class="floating-tag tag2"><span>⚙️</span> Odoo Expert</div>
   </div>
 </section>
 
+<!-- MARQUEE -->
 <div class="marquee-wrap">
   <div class="marquee-track">
     <div class="marquee-item"><span class="marquee-dot">·</span> Odoo ERP</div>
     <div class="marquee-item"><span class="marquee-dot">·</span> Business Advisory</div>
     <div class="marquee-item"><span class="marquee-dot">·</span> Data Engineering</div>
-    <div class="marquee-item"><span class="marquee-dot">·</span> Functional Consulting</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> System Design</div>
     <div class="marquee-item"><span class="marquee-dot">·</span> OOP & DSA</div>
     <div class="marquee-item"><span class="marquee-dot">·</span> Food & Beverages</div>
     <div class="marquee-item"><span class="marquee-dot">·</span> Manufacturing</div>
     <div class="marquee-item"><span class="marquee-dot">·</span> Trading</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> DBMS & LLD</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> Functional Consulting</div>
     <div class="marquee-item"><span class="marquee-dot">·</span> Odoo ERP</div>
     <div class="marquee-item"><span class="marquee-dot">·</span> Business Advisory</div>
     <div class="marquee-item"><span class="marquee-dot">·</span> Data Engineering</div>
-    <div class="marquee-item"><span class="marquee-dot">·</span> Functional Consulting</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> System Design</div>
     <div class="marquee-item"><span class="marquee-dot">·</span> OOP & DSA</div>
     <div class="marquee-item"><span class="marquee-dot">·</span> Food & Beverages</div>
     <div class="marquee-item"><span class="marquee-dot">·</span> Manufacturing</div>
     <div class="marquee-item"><span class="marquee-dot">·</span> Trading</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> DBMS & LLD</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span> Functional Consulting</div>
   </div>
 </div>
 
+<!-- SKILLS -->
 <section id="skills" class="skills-section">
   <div class="sec-label">What I Know</div>
   <div class="sec-heading">Skills & <em>Expertise</em></div>
@@ -280,52 +284,73 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.05);paddin
     <div class="skill-block">
       <span class="skill-emoji">⚙️</span>
       <div class="skill-name">Odoo ERP</div>
-      <p class="skill-desc">Deep expertise in Odoo implementation, customization, and functional consulting across trading, manufacturing, and food & beverage industries.</p>
-      <div class="skill-tags"><span class="skill-tag">Functional</span><span class="skill-tag">Implementation</span><span class="skill-tag">Customization</span></div>
+      <p class="skill-desc">End-to-end Odoo implementation across trading and manufacturing — sales, purchase, inventory, accounting, manufacturing (MRP, BOM, production planning), quality, maintenance, and website builder with payment & delivery gateways.</p>
+      <div class="skill-tags"><span class="skill-tag">Functional</span><span class="skill-tag">Implementation</span><span class="skill-tag">Website Builder</span><span class="skill-tag">MRP</span></div>
     </div>
     <div class="skill-block">
       <span class="skill-emoji">💻</span>
       <div class="skill-name">Technical Skills</div>
-      <p class="skill-desc">Strong foundation in Object-Oriented Programming and Data Structures & Algorithms. Currently building expertise in Data Engineering and pipeline architecture.</p>
-      <div class="skill-tags"><span class="skill-tag">OOP</span><span class="skill-tag">DSA</span><span class="skill-tag">Python</span></div>
+      <p class="skill-desc">Solid foundation in computer science fundamentals — OOP, DBMS, Low Level Design, High Level Design, and System Design thinking. Working knowledge of HTML and spreadsheets/Excel for data handling.</p>
+      <div class="skill-tags"><span class="skill-tag">OOP</span><span class="skill-tag">DBMS</span><span class="skill-tag">LLD</span><span class="skill-tag">HLD</span><span class="skill-tag">System Design</span><span class="skill-tag">HTML</span></div>
     </div>
     <div class="skill-block">
       <span class="skill-emoji">📈</span>
       <div class="skill-name">Business Consulting</div>
-      <p class="skill-desc">Experience advising traders and manufacturers on process optimization, ERP adoption, and operational efficiency — delivering measurable revenue impact.</p>
-      <div class="skill-tags"><span class="skill-tag">Strategy</span><span class="skill-tag">Process Ops</span><span class="skill-tag">Advisory</span></div>
+      <p class="skill-desc">Advisory experience with traders and manufacturers — relationship building, business planning, process optimization, and ERP adoption. Delivered measurable business impact with 2× revenue vs CTC.</p>
+      <div class="skill-tags"><span class="skill-tag">Strategy</span><span class="skill-tag">Relationship Building</span><span class="skill-tag">Business Planning</span></div>
     </div>
     <div class="skill-block">
       <span class="skill-emoji">🔭</span>
-      <div class="skill-name">Data Engineering (Learning)</div>
-      <p class="skill-desc">Actively pursuing data engineering skills — passionate about pipelines, analytics, and transforming raw business data into actionable insights.</p>
-      <div class="skill-tags"><span class="skill-tag">Pipelines</span><span class="skill-tag">Analytics</span><span class="skill-tag">SQL</span></div>
+      <div class="skill-name">Data Engineering (Pursuing)</div>
+      <p class="skill-desc">Actively upskilling in data engineering — DSA, SQL, DBMS, and pipeline architecture. Goal: transform business knowledge into data-driven solutions.</p>
+      <div class="skill-tags"><span class="skill-tag">DSA</span><span class="skill-tag">SQL</span><span class="skill-tag">Excel</span><span class="skill-tag">Spreadsheets</span><span class="skill-tag">ERP Data</span></div>
     </div>
   </div>
 </section>
 
+<!-- EXPERIENCE -->
 <section id="experience" class="exp-section">
   <div class="sec-label">Career Path</div>
   <div class="sec-heading">Work <em>Experience</em></div>
   <div class="timeline">
+
     <div class="timeline-item">
       <div class="timeline-dot"></div>
-      <div class="timeline-period">2023 – Present · 1.4 Years</div>
-      <div class="timeline-role">Business Advisor</div>
+      <div class="timeline-period">Feb 2025 – Present · Full Time</div>
+      <div class="timeline-role">Odoo Consultant</div>
       <div class="timeline-company">Odoo ERP Consulting</div>
-      <p class="timeline-desc">Worked closely with traders and manufacturers — primarily in food & beverage — to implement and optimize Odoo ERP. Drove business process improvements resulting in measurable ROI well beyond expectations.</p>
-      <div class="timeline-badge">🚀 Delivered 2× Revenue vs CTC</div>
+      <div class="timeline-desc">
+        Delivering end-to-end Odoo implementations for trading and manufacturing clients across food & beverage industry.
+        <ul>
+          <li>Trading clients: Sales, Purchase, Inventory Management — full cycle from quotation to payment</li>
+          <li>Manufacturing clients: Inventory routing, MRP, Production Planning, Bill of Materials (BOM), Accounting, Quality & Maintenance cycles</li>
+          <li>Odoo Website Builder: End-to-end setup including Payment Gateway, Delivery Gateway, Vouchers, Checkout pages</li>
+          <li>Custom HTML modifications within Odoo website for client-specific UI requirements</li>
+        </ul>
+      </div>
+      <div class="timeline-badge">🚀 2× Revenue Delivered vs CTC</div>
     </div>
+
     <div class="timeline-item">
       <div class="timeline-dot"></div>
-      <div class="timeline-period">2022 – 2023 · 6 Months</div>
-      <div class="timeline-role">Intern — Functional Consultant</div>
+      <div class="timeline-period">Jun 2024 – Jan 2025 · Internship</div>
+      <div class="timeline-role">Business Advisor Intern</div>
       <div class="timeline-company">Odoo ERP</div>
-      <p class="timeline-desc">Kickstarted career with a deep-dive internship into Odoo's functional ecosystem. Learned end-to-end ERP workflows, business analysis, and client communication — building the foundation for a consulting career.</p>
+      <div class="timeline-desc">
+        Deep-dive into Odoo's functional ecosystem and business consulting.
+        <ul>
+          <li>Learned the Odoo product suite top to bottom across all major modules</li>
+          <li>Built client communication and consulting skills through real interactions</li>
+          <li>Developed relationship building and business planning capabilities</li>
+          <li>Worked on requirement gathering, gap analysis, and solution mapping</li>
+        </ul>
+      </div>
     </div>
+
   </div>
 </section>
 
+<!-- PROJECTS -->
 <section id="projects">
   <div class="sec-label">What I've Built</div>
   <div class="sec-heading">Featured <em>Projects</em></div>
@@ -333,30 +358,31 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.05);paddin
     <div class="project-card">
       <div class="project-num">01</div>
       <div class="project-title">Wireless Bluetooth Screen Display</div>
-      <p class="project-desc">Built during college at St. Xavier's Ahmedabad — a wireless display system powered by Arduino and Bluetooth communication. Combined hardware and software to create a functional prototype from scratch.</p>
+      <p class="project-desc">Built during B.Sc. at St. Xavier's Ahmedabad — a wireless display system powered by Arduino and Bluetooth. Combined hardware and software to create a fully working prototype from scratch.</p>
       <div class="project-result">🎓 College Project · Electronics + Arduino</div>
     </div>
     <div class="project-card">
       <div class="project-num">02</div>
-      <div class="project-title">Food & Beverage ERP Implementation</div>
-      <p class="project-desc">Led Odoo ERP deployments for multiple food & beverage traders and manufacturers — streamlining procurement, inventory, sales, and accounting into a unified system.</p>
-      <div class="project-result">📈 Result: 2× Revenue vs CTC Delivered</div>
+      <div class="project-title">End-to-End Odoo Website with Commerce</div>
+      <p class="project-desc">Set up complete Odoo website for client — product pages, checkout flow, payment gateway integration, delivery gateway, voucher system, and custom HTML UI tweaks for brand consistency.</p>
+      <div class="project-result">🛒 Odoo Website Builder · Full E-Commerce Stack</div>
     </div>
     <div class="project-card">
       <div class="project-num">03</div>
-      <div class="project-title">Manufacturing Process Optimization</div>
-      <p class="project-desc">Consulted for manufacturing clients to map existing workflows and redesign them within Odoo — reducing manual effort, improving traceability, and cutting operational delays.</p>
-      <div class="project-result">⚙️ Industry: Manufacturing · Odoo MRP</div>
+      <div class="project-title">Manufacturing ERP Implementation</div>
+      <p class="project-desc">Full Odoo MRP rollout for food & beverage manufacturer — inventory routing, BOM setup, production planning, quality checks, maintenance cycles, and integrated accounting.</p>
+      <div class="project-result">⚙️ Industry: F&B Manufacturing · Odoo MRP</div>
     </div>
     <div class="project-card">
       <div class="project-num">04</div>
       <div class="project-title">Trading Business Digitization</div>
-      <p class="project-desc">Helped multiple trading companies transition from manual/excel-based operations to fully digital Odoo workflows — purchase, sales, invoicing, and reporting all in one place.</p>
-      <div class="project-result">🛒 Industry: Trading · Full Odoo Suite</div>
+      <p class="project-desc">Migrated trading companies from manual/Excel operations to full Odoo — sales, purchase, inventory management, invoicing, and real-time reporting all unified in one system.</p>
+      <div class="project-result">📦 Industry: Trading · Full Odoo Suite</div>
     </div>
   </div>
 </section>
 
+<!-- EDUCATION -->
 <section id="education" class="edu-section">
   <div class="sec-label">Academic Background</div>
   <div class="sec-heading">My <em>Education</em></div>
@@ -374,6 +400,7 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.05);paddin
   </div>
 </section>
 
+<!-- GOAL -->
 <section class="goal-section">
   <div class="sec-label">What's Next</div>
   <div class="goal-text">"I'm a business consultant who codes — and I'm now aiming to become a <em>Data Engineer</em> who understands business."</div>
@@ -382,16 +409,18 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.05);paddin
     <span class="goal-tag">📊 Business Intelligence</span>
     <span class="goal-tag">⚙️ ETL Pipelines</span>
     <span class="goal-tag">🐍 Python</span>
-    <span class="goal-tag">🗄️ SQL & Databases</span>
+    <span class="goal-tag">🗄️ SQL & DBMS</span>
+    <span class="goal-tag">🏗️ System Design</span>
     <span class="goal-tag">🤝 Open to Opportunities</span>
   </div>
 </section>
 
+<!-- CONTACT -->
 <section id="contact" class="contact-section">
   <div class="contact-inner">
     <div class="contact-left">
       <div class="big-text">Let's <em>Work</em> Together.</div>
-      <p>Whether you need an Odoo consultant, a business advisor, or someone eager to grow into data engineering — I'm your guy. Let's connect.</p>
+      <p>Whether you need an Odoo consultant, a business advisor, or someone hungry to grow into data engineering — I'm your guy. Let's connect.</p>
       <div class="contact-links">
         <a href="https://www.linkedin.com/in/sharmaprajwal/" target="_blank" class="contact-link">
           <div class="contact-link-icon">💼</div>linkedin.com/in/sharmaprajwal
@@ -399,17 +428,17 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.05);paddin
         <a href="mailto:sharmaprajwal6@gmail.com" class="contact-link">
           <div class="contact-link-icon">✉️</div>sharmaprajwal6@gmail.com
         </a>
-        <a href="#" class="contact-link">
+        <a class="contact-link">
           <div class="contact-link-icon">📍</div>Ahmedabad, Gujarat, India
         </a>
       </div>
     </div>
     <div class="contact-right">
       <h3>Send a Message</h3>
-      <div class="form-field"><input type="text" placeholder="Your Name"/></div>
-      <div class="form-field"><input type="email" placeholder="Your Email"/></div>
-      <div class="form-field"><input type="text" placeholder="Subject"/></div>
-      <div class="form-field"><textarea placeholder="Your message..."></textarea></div>
+      <div class="form-field"><input type="text" id="f-name" placeholder="Your Name"/></div>
+      <div class="form-field"><input type="email" id="f-email" placeholder="Your Email"/></div>
+      <div class="form-field"><input type="text" id="f-subject" placeholder="Subject"/></div>
+      <div class="form-field"><textarea id="f-message" placeholder="Your message..."></textarea></div>
       <button class="send-btn" onclick="sendEmail()">Send Message →</button>
     </div>
   </div>
@@ -421,46 +450,67 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.05);paddin
 </footer>
 
 <script>
-// Custom cursor
+// ── CURSOR with auto-invert on dark backgrounds ──
 const cursor = document.getElementById('cursor');
 const follow = document.getElementById('cursorFollow');
-let mx=0,my=0,fx=0,fy=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  cursor.style.left=mx-4+'px';cursor.style.top=my-4+'px';
+let mx=0, my=0, fx=0, fy=0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx - 6 + 'px';
+  cursor.style.top  = my - 6 + 'px';
 });
-function animFollow(){
-  fx+=(mx-fx)*0.12;fy+=(my-fy)*0.12;
-  follow.style.left=fx-18+'px';follow.style.top=fy-18+'px';
+
+(function animFollow(){
+  fx += (mx - fx) * 0.12;
+  fy += (my - fy) * 0.12;
+  follow.style.left = fx - 19 + 'px';
+  follow.style.top  = fy - 19 + 'px';
   requestAnimationFrame(animFollow);
-}animFollow();
+})();
 
-document.querySelectorAll('a,button,.skill-block,.project-card,.contact-link').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cursor.style.transform='scale(2.5)';follow.style.transform='scale(1.5)';});
-  el.addEventListener('mouseleave',()=>{cursor.style.transform='scale(1)';follow.style.transform='scale(1)';});
+// Hover scale on interactive elements
+document.querySelectorAll('a, button, .skill-block, .project-card, .contact-link, .goal-tag').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.classList.add('hover'); follow.classList.add('hover'); });
+  el.addEventListener('mouseleave', () => { cursor.classList.remove('hover'); follow.classList.remove('hover'); });
 });
 
-// Scroll reveal
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
     if(e.isIntersecting){
-      e.target.style.animation='fadeUp .6s ease both';
-      e.target.style.opacity='1';
+      e.target.style.animation = 'fadeUp .6s ease both';
+      e.target.style.opacity = '1';
     }
   });
-},{threshold:0.1});
-document.querySelectorAll('.skill-block,.timeline-item,.project-card,.edu-card').forEach(el=>{
-  el.style.opacity='0';observer.observe(el);
+}, {threshold: 0.1});
+
+document.querySelectorAll('.skill-block, .timeline-item, .project-card, .edu-card').forEach(el => {
+  el.style.opacity = '0';
+  observer.observe(el);
 });
 
-// Send email via mailto
+// ── SEND EMAIL via mailto (redirects to Gmail) ──
 function sendEmail(){
-  const name = document.querySelector('.contact-right input[type="text"]').value;
-  const email = document.querySelector('.contact-right input[type="email"]').value;
-  const subject = document.querySelectorAll('.contact-right input[type="text"]')[1].value;
-  const message = document.querySelector('.contact-right textarea').value;
-  const mailto = `mailto:sharmaprajwal6@gmail.com?subject=${encodeURIComponent(subject || 'Portfolio Inquiry')}&body=${encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message)}`;
-  window.location.href = mailto;
+  const name    = document.getElementById('f-name').value.trim();
+  const email   = document.getElementById('f-email').value.trim();
+  const subject = document.getElementById('f-subject').value.trim();
+  const message = document.getElementById('f-message').value.trim();
+
+  if(!name && !message){ alert('Please fill in at least your name and message.'); return; }
+
+  const body = [
+    name    ? 'Name: ' + name    : '',
+    email   ? 'Email: ' + email  : '',
+    '',
+    message
+  ].filter(Boolean).join('\n');
+
+  const mailto = 'mailto:sharmaprajwal6@gmail.com'
+    + '?subject=' + encodeURIComponent(subject || 'Portfolio Inquiry from ' + (name || 'Visitor'))
+    + '&body='    + encodeURIComponent(body);
+
+  window.open(mailto, '_blank');
 }
 </script>
 </body>
